@@ -1,0 +1,19 @@
+server:
+  port: 9400
+spring:
+  application:
+    name: zipkin-server
+  main:
+    allow-bean-definition-overriding: true
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+# 注册中心
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka/,http://localhost:8011/eureka/

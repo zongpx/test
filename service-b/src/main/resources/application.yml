@@ -1,0 +1,32 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: service-b
+  zipkin:
+    base-url: http://localhost:9400
+    enabled: true
+# 注册中心
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 6
+    lease-renewal-interval-in-seconds: 6
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka/,http://localhost:8011/eureka/
+    registryFetchIntervalSeconds: 6
+    registerWithEureka: true
+    fetchRegistry: true
+
+ribbon:
+  ServerListRefreshInterval: 5000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
